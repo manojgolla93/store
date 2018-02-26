@@ -1,0 +1,72 @@
+<div class="panel panel-primary">
+    <div class="panel-heading">
+       {{title}}
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-4">filter by</div>
+            <div class="col-md-8" >
+                 <input type="text" [(ngModel)]="textBox">
+            </div>
+            <div class="col-md-8">
+                <h1>filteredBy:{{textBox}}</h1>
+            </div>
+
+        </div>
+        <div class="table-responsive" *ngIf="orders">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            <button class="btn btn-success" (click)="toggleImage()"> click to display</button>
+                        </th>
+                        <th>order Id</th>
+                        <th>order Name</th>
+                        <th>order Date</th>
+                        <th>order Code</th>
+                        <th>price</th>
+                        <th>starRating</th>
+                    </tr>   
+                </thead>
+                <tbody>
+                        <tr *ngFor="let order of orders | orderFilter:textbox">
+           
+                            <td><img [src]='order.imageUrl'  *ngIf="showImage" [style.width.px]="imageWidth" ></td>
+                            <td><a [routerLink]="['/orders',order.orderId]"
+                                [queryParams]="{name:order.orderName,desc:order.description,img:order.imageUrl}">
+                                {{order.orderId}}</a></td>
+                            <td> {{order.orderName}}</td>
+                            <td>{{order.orderDate}}</td>
+                            <td>{{order.orderCode}}</td>
+                            <td>{{order.price}}</td>
+                            <td><manoj-star [rating]="order.starRating" 
+                                (ratingClicked)="onRatingClicked($event)" ></manoj-star>
+                            </td>
+                        </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

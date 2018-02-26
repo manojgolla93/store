@@ -1,0 +1,51 @@
+<div class="panel panel-primary">
+    <div class="panel-heading">
+       {{title}}
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-2">Filter by</div>
+            <div class="col-md-4">
+                <input type="text"  [(ngModel)]="filterBox" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h3>Filtered By:{{filterBox}}</h3>
+            </div>
+        </div>
+        <div class="table-responsive" *ngIf="products && products.length">
+            <table class="table" >
+                <thead>
+                    <tr>
+                        <th><button class="btn btn-success" (click)="toggleImage()">Show Image</button></th>
+                        <th>Product NAme</th>
+                        <th>Product Code</th>
+                        <th>Available</th>
+                        <th>Price</th>
+                        <th>StarRating</th>
+                        <th>releaseDate</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let product of products| productFilter:filterBox">
+                        <td><img [src]='product.imageUrl' *ngIf="showImage"
+                            [style.width.px]="imageWidth"></td>
+                        <td><a [routerLink]="['/products',product.productId]"
+                            [queryParams]="{name:product.productName,desc:product.description,img:product.imageUrl}" >
+                                {{product.productName|uppercase}}
+                            </a></td>
+                        <td>{{product.productCode|lowercase}}</td>
+                        <td>{{product.releaseDate}}</td>
+                        <td>{{product.price|currency:'INR'}}</td>
+                        <td><manoj-star [rating]="product.starRating"
+                            (ratingClicked)="onRatingClicked($event)" ></manoj-star></td>
+                        <td>{{product.releaseDate}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+    </div>
+</div>
